@@ -37,7 +37,7 @@ public class StartPage extends WebDriverUtility {
 	By pEevening = By.xpath("//div[@id='bd7c']//tbody/tr[5]/td[@class='p4  ']");
 
 	public void getPressureValues() throws InterruptedException {
-		
+
 		ArrayList<Integer> pressureList = new ArrayList<>();
 		pressureList.add(Integer.valueOf(getText(driver, pNight)));
 		pressureList.add(Integer.valueOf(getText(driver, pMorning)));
@@ -47,15 +47,16 @@ public class StartPage extends WebDriverUtility {
 		Iterator<Integer> iter = pressureList.iterator();
 		while (iter.hasNext()) {
 			Integer pressure = iter.next().intValue();
-			if (pressure >= 600 && pressure <= 700)  
-				    System.out.println("Pressure OK");
-			if (pressure < 600)
-					Assert.fail("Pressure is Less than 600");
-			if (pressure > 700)
-					Assert.fail("Pressure is More than 700");
-			
+			if (pressure >= 600 && pressure <= 700)
+				System.out.println("Pressure OK");
+			else if (pressure < 600)
+				Assert.fail("Pressure is Less than 600");
+			else if (pressure > 700)
+				Assert.fail("Pressure is More than 700");
+			else
+				System.out.println("Pressure values ares incorrect");
 		}
-		
+
 	}
 
 }
