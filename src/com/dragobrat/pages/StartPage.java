@@ -54,7 +54,7 @@ public class StartPage extends WebDriverUtility {
 			else if (pressure > 700)
 				Assert.fail("Pressure is More than 700");
 			else
-				System.out.println("Pressure values ares incorrect");
+				Assert.fail("Pressure values ares incorrect");
 		}
 
 	}
