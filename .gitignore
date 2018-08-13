@@ -1,0 +1,6 @@
+/target
+/maven-status
+/surfire-reports
+/test-output
+/.classpath
+.project
