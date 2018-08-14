@@ -1,4 +1,4 @@
-package com.dragobrat.tests;
+package com.dragobrat.test;
 
 import java.net.MalformedURLException;
 
@@ -14,8 +14,7 @@ public class VerifyGetPressureTest extends WebDriverUtility {
 		start();
 		
 		StartPage startPage = new StartPage(driver);
-		startPage.findDragobrat();
-		startPage.getPressureValues();
+		startPage.getPressureByCity("Драгобрат", "Суббота");
 
 		driver.quit();
 	}

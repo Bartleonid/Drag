@@ -63,6 +63,8 @@ public class WebDriverUtility {
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.manage().deleteAllCookies();
 	}
+	
+	public final static int TIMEOUT = 300;
 
 	protected void compareElementsByText(WebDriver driver, By locator, String expectedElement)
 			throws InterruptedException {
@@ -168,6 +170,35 @@ public class WebDriverUtility {
 		action.sendKeys(element, " ").build().perform();
 		element.clear();
 		element.sendKeys((String) text);
+	}
+	
+	public static WebElement waitForElement(WebDriver driver, final By by, int timeout) {
+		org.openqa.selenium.support.ui.Wait<WebDriver> wait = new WebDriverWait(driver, timeout);
+
+		driver.manage().timeouts().setScriptTimeout(timeout, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
+
+		ExpectedCondition<WebElement> expectation = new ExpectedCondition<WebElement>() {
+			public WebElement apply(WebDriver driver) {
+				return driver.findElement(by);
+			}
+		};
+
+		try {
+			return wait.until(expectation);
+		} catch (Throwable error) {
+			return null;
+		}
+	}
+	
+	public void isTestElementPresent(WebDriver driver, By locator) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
+			wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+			driver.findElement(locator);
+		} catch (NoSuchElementException e) {
+			Assert.assertFalse(false, "element not found");
+		}
 	}
 
 }

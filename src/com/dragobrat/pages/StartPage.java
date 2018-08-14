@@ -2,10 +2,8 @@ package com.dragobrat.pages;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import com.dragobrat.common.WebDriverUtility;
@@ -19,24 +17,20 @@ public class StartPage extends WebDriverUtility {
 	}
 
 	By searchField = By.xpath("//input[@id='search_city']");
-	String dragobrat = "Драгобрат";
-	By sunday = By.xpath("//a[contains(text(), 'Воскресенье')]");
-	String expectedDragobrat = "в Драгобрате";
-	By titleStrong = By.xpath("//strong[contains(text(), '" + expectedDragobrat + "')]");
-
-	public void findDragobrat() throws InterruptedException {
-		type(driver, searchField, dragobrat);
+	
+	public void getPressureByCity(String city, String day) throws InterruptedException {
+		type(driver, searchField, city);
 		pressEnter(driver, searchField);
-		compareElementsByText(driver, titleStrong, expectedDragobrat);
-		click(driver, sunday);
-	}
-
-	By pNight = By.xpath("//div[@id='bd7c']//tbody/tr[5]/td[@class='p1 bR ']");
-	By pMorning = By.xpath("//div[@id='bd7c']//tbody/tr[5]/td[@class='p2 bR ']");
-	By pDay = By.xpath("//div[@id='bd7c']//tbody/tr[5]/td[@class='p3 bR ']");
-	By pEevening = By.xpath("//div[@id='bd7c']//tbody/tr[5]/td[@class='p4  ']");
-
-	public void getPressureValues() throws InterruptedException {
+		By titleStrong = By.xpath("//strong[contains(text(), 'в " + city + "')]");
+		isTestElementPresent(driver, titleStrong);
+		By dayElem = By.xpath("//*[@class='day-link'][contains(text(), '"+ day +"')]");
+		click(driver, dayElem);
+		String baseLocatorPressure = "//*[@class='infoDayweek'][contains(text(), '"+ day +"')]/../../..//*[@class='weatherDetails']//tr[5]";
+		
+		By pNight = By.xpath(baseLocatorPressure + "/td[1]");
+		By pMorning = By.xpath(baseLocatorPressure + "/td[2]");
+		By pDay = By.xpath(baseLocatorPressure + "/td[3]");
+		By pEevening = By.xpath(baseLocatorPressure + "/td[4]");
 
 		ArrayList<Integer> pressureList = new ArrayList<>();
 		pressureList.add(Integer.valueOf(getText(driver, pNight)));
