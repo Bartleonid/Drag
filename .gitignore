@@ -2,5 +2,7 @@
 /maven-status
 /surfire-reports
 /test-output
-/.classpath
+.classpath
 .project
+/bin
+/.settings
